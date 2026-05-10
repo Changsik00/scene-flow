@@ -1,64 +1,88 @@
-# html-to-ppt
+# scene-flow
 
-> HTML로 만드는 프레젠테이션 — 슬라이드, PDF, 영상, 자막까지 하나의 파이프라인으로.
-
----
-
-## 왜 HTML로 PPT를?
-
-PowerPoint나 Keynote는 강력하지만 닫혀 있다. HTML은 열려 있다.
-
-| | 기존 PPT 도구 | html-to-ppt |
-|---|:---:|:---:|
-| 버전 관리 (Git) | ✗ | ✓ |
-| 브라우저에서 바로 실행 | ✗ | ✓ |
-| PDF 출력 | ✓ | ✓ |
-| 영상(MP4) 직출 | △ | ✓ |
-| 자막 자동 생성 | ✗ | ✓ |
-| 코드/애니메이션 자유도 | ✗ | ✓ |
+> HTML 을 base layer 로 한 **layered presentation & video pipeline**.
+> scene 을 만들고, 발표하면서 녹화하고, 그 위에 음성·자막을 덮어 최종 콘텐츠를 뽑는다.
 
 ---
 
-## 핵심 기능
-
-- **슬라이드 엔진** — HTML + CSS Animation. 키보드·스와이프 네비게이션, 풀스크린
-- **PDF 출력** — 브라우저 인쇄 모드(`@media print`). 별도 도구 불필요
-- **Markdown 소스** — `.md` 파일로 슬라이드 작성, `---`로 페이지 구분
-- **DESIGN.md** — 테마·색상·폰트를 명세 파일 하나로 관리, CSS 변수 자동 주입
-- **영상 출력** — 브라우저 녹화(`MediaRecorder`) 또는 Puppeteer + ffmpeg 파이프라인
-- **자막 지원** — 발표자 노트 → SRT/VTT 변환, YouTube 업로드 준비
-
----
-
-## 전체 파이프라인
+## 핵심 멘탈 모델
 
 ```
-DESIGN.md  ←──── 테마 명세
-    │
-    ▼
-slides.md  ←──── 콘텐츠 작성 (Markdown)
-    │
-    ├──→  HTML 슬라이드  ──→  브라우저 발표
-    │           ├──→  PDF (인쇄 모드)
-    │           └──→  PNG 시퀀스 (Puppeteer)
-    │                       │
-    │                  ffmpeg ──→  MP4
-    │                                │
-    └──→  SRT 자막  ──────────────→  YouTube
+   ┌─────────────────────────────────────────┐
+   │  Phase 4 — AI Automation (선택)           │   script → scene, TTS, 자동 자막
+   ├─────────────────────────────────────────┤
+   │  Phase 3 — Composition                  │   ffmpeg + 자막 sync → 최종 MP4
+   ├─────────────────────────────────────────┤
+   │  Phase 2 — Recording                    │   화면 + 음성 + Scene Event Log
+   ├─────────────────────────────────────────┤
+   │  Phase 1 — Scene Engine  (= base)       │   HTML scene + browser viewer + PDF
+   └─────────────────────────────────────────┘
+        ↑ HTML 이 모든 레이어의 기준
 ```
 
+- **HTML scene = base layer** — 재현 가능 / git diff 가능 / AI 친화 / 코드.
+- **녹화 · 음성 · 자막 = overlay layer** — 사람이 진행 / 후처리 / 영상.
+- **최종 산출물 = base + overlay 의 합성**.
+
+PPT / Reveal.js 처럼 *발표만* 하는 도구도 아니고, Loom 처럼 *녹화만* 하는 도구도 아니다.
+**둘을 분리해서 쌓는다** — 그래서 라이브로 발표한 영상도 나중에 scene 부분만 4K 로 갈아끼울 수 있다.
+
 ---
+
+## 단계별 가치 (각 phase 가 거기서 멈춰도 의미가 있음)
+
+| Phase | 이름 | 만들면 무엇이 가능한가 | 단독 가치 |
+|:---:|---|---|---|
+| **1** | Scene Engine | HTML / Markdown 으로 scene 작성 → 브라우저 발표 → PDF 출력 | "Reveal.js 대안" |
+| **2** | Recording | 발표하면서 화면 + 마이크 녹화 + Scene Event Log 기록 | "Loom for developers" |
+| **3** | Composition | 녹화본 + Event Log + 자막 → ffmpeg 로 합성, scene 부분 재렌더링 가능 | "creator pipeline" |
+| **4** | AI Automation | 주제 / 스크립트 → scene 자동 생성, TTS 음성, 자동 자막 | "AI content factory" |
+
+> 각 phase 의 정의 / 진입 조건 / 산출물 / 결정되지 않은 부분 → [docs/planning.md](docs/planning.md)
+
+---
+
+## 핵심 무기 — Scene Event Log
+
+녹화할 때 *scene 이 무엇을 했는지* 를 메타데이터로 같이 기록한다:
+
+```jsonl
+{"t": 0.00, "event": "scene-start", "id": "intro"}
+{"t": 12.40, "event": "fragment", "scene": "intro", "step": 1}
+{"t": 18.90, "event": "scene-change", "to": "tcp-handshake"}
+{"t": 45.20, "event": "highlight", "selector": "#syn-arrow"}
+```
+
+이게 있으면:
+
+- **자막 자동 sync** — Whisper 가 뽑은 timestamp 와 scene 이벤트가 같은 시간축이라 부담 없이 매칭.
+- **scene 부분만 재렌더링** — 라이브 음성은 그대로 두고 scene 만 4K HTML 로 갈아끼우기.
+- **하이라이트 / 챕터 자동 생성** — scene-change 가 곧 챕터 구분점.
+
+일반 화면 녹화 (= "그냥 픽셀") 가 못 하는 부분이다.
+
+---
+
+## 비교
+
+| | scene-flow | Reveal.js / Marp | Loom | Remotion |
+|---|:---:|:---:|:---:|:---:|
+| HTML scene 발표 | ✓ | ✓ | ✗ | △ (코드형) |
+| 화면 + 음성 녹화 | ✓ | ✗ | ✓ | ✗ |
+| Scene Event Log | ✓ | ✗ | ✗ | ✗ |
+| ffmpeg 후합성 / 재렌더링 | ✓ | ✗ | ✗ | ✓ |
+| AI 자동 생성 (선택) | ✓ | ✗ | ✗ | △ |
+| CLI / 로컬 우선 | ✓ | △ | ✗ | ✓ |
+
+scene-flow 의 차별점은 **layered overlay 모델 + Scene Event Log** — 발표 도구와 영상 파이프라인을 한 축으로 묶었다.
+
+---
+
+## 현재 상태
+
+- `phase-01` (Scene Engine) **설계 단계**.
+- 본 저장소는 [harness-kit](https://github.com/) 거버넌스를 따른다 — `/hk-align` 으로 SDD 세션 시작.
 
 ## 문서
 
-- [기획 및 아이디어](docs/planning.md)
-
----
-
-## 유사 프로젝트
-
-- [Reveal.js](https://revealjs.com/) — 기능이 많고 무거움
-- [Marp](https://marp.app/) — 심플하지만 커스터마이징 제한
-- [Slidev](https://sli.dev/) — Vue 의존
-
-**차별점**: 프레임워크 의존 없음 + DESIGN.md 기반 명세 + ffmpeg 영상 파이프라인.
+- [기획 / Phase 정의 / 결정되지 않은 사항](docs/planning.md)
