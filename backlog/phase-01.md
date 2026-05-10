@@ -49,53 +49,61 @@
 | ID | 슬러그 | 우선순위 | 상태 | 디렉토리 |
 |---|---|:---:|---|---|
 | `spec-01-01` | bootstrap-viewer | P? | Merged | `specs/spec-01-01-bootstrap-viewer/` |
+| `spec-01-02` | restructure-after-bootstrap | P? | Active | `specs/spec-01-02-restructure-after-bootstrap/` |
 <!-- sdd:specs:end -->
 
 > 상태 허용값: `Backlog` / `In Progress` / `Merged`
 > sdd 가 ship 시 자동으로 `Merged` 로 갱신합니다. `In Progress` 는 active spec 에 자동 마킹됩니다.
 
-### spec-1-01 — IR + 렌더 엔진 결정 + 최소 viewer (+ 잔재 정리)
+### spec-01-01 — IR + 렌더 엔진 결정 + 최소 viewer (+ 이전 잔재 정리) ✅ Merged
 
 - **요점**: Scene IR 형식과 렌더 엔진을 결정하고 (ADR 작성), "hello world" scene 1장이 브라우저에 떠야 한다. 동시에 phase-x-rebrand-vision 머지 후 main 에 떠 있던 잔재 (`backlog/queue.md`, `.gitignore`, `CLAUDE.md`, `.claude/`) 도 본 spec 의 첫 task 에서 같이 정리한다.
-- **방향성**:
-  1. Scene IR 결정 → ADR-001
-  2. 렌더 엔진 결정 → ADR-002
-  3. 최소 viewer 구현 (한 scene 파일 → 브라우저 표시)
-  4. 잔재 정리 (workspace cleanup)
+- **결과**: ADR-001 (MD + inline HTML), ADR-002 (Reveal.js + 점진 이주), `src/ir/parser.ts` + `src/viewer.ts` + `public/scenes/hello.md` 동작 확인.
 - **참조**:
   - `docs/planning.md` Open Questions §5.2 (IR 형식), §5.3 (렌더 엔진)
-  - 신규 작성: `docs/decisions/ADR-001-scene-ir.md`, `docs/decisions/ADR-002-render-engine.md`
-- **연관 모듈**: 신규 — 최소 src/, public/ (실제 경로는 spec.md 에서 결정)
+  - `docs/decisions/ADR-001-scene-ir.md`, `docs/decisions/ADR-002-render-engine.md`
 
-### spec-1-02 — 키보드 / 풀스크린 네비게이션
+### spec-01-02 — bootstrap 후속 — 저장소 구조 정리 (`studio/` + pnpm)
+
+- **요점**: 최상위에 코드 / 거버넌스 / 진입점이 한 평면에 섞여 있던 문제를 해결. 코드 전체를 `studio/` 컨테이너로 묶고, npm → pnpm 전환. 미래 React 도입 자리만 ADR-003 으로 명시 (지금 도입 안 함, 오버엔지니어링 회피).
+- **방향성**:
+  1. ADR-003 작성 (저장소 구조 + 패키지 매니저 + 미래 React/Tailwind/shadcn/FSD/front.md 도입 자리)
+  2. `git mv` 로 모든 코드 → `studio/` 안 (rename 추적 보존)
+  3. corepack 으로 pnpm 활성, `pnpm-lock.yaml` 생성, `package-lock.json` 폐기
+  4. Vite root / TS include 경로 자동 동작 확인 + Playwright 헤드리스 시나리오 1 재검증
+  5. README / docs/planning 디렉토리 트리 갱신
+- **참조**: `docs/decisions/ADR-003-repository-structure.md` (신규)
+- **연관 모듈**: `studio/` 전체 (모든 코드 이동), `backlog/phase-01.md` (본 spec 본문 + 후속 spec 번호 재배치)
+
+### spec-01-03 — 키보드 / 풀스크린 네비게이션
 
 - **요점**: 다중 scene 간 이동 (←/→ / PgUp/PgDn / Space) + 풀스크린 토글 (F / Esc).
-- **방향성**: spec-1-01 의 viewer 위에 키 핸들러 + Fullscreen API. URL hash 동기화 (`#/scene-2`) 로 새로고침해도 같은 scene 유지.
-- **참조**: spec-1-01 viewer 코드 + MDN Fullscreen API.
-- **연관 모듈**: viewer 입력 모듈 (spec-1-01 에서 결정된 경로).
+- **방향성**: spec-01-01 의 viewer 위에 키 핸들러 + Fullscreen API. URL hash 동기화 (`#/scene-2`) 로 새로고침해도 같은 scene 유지.
+- **참조**: spec-01-01 viewer 코드 + MDN Fullscreen API.
+- **연관 모듈**: `studio/src/viewer.ts` 의 입력 모듈 (또는 별 파일로 분리).
 
-### spec-1-03 — CSS 애니메이션 + Fragment 등장
+### spec-01-04 — CSS 애니메이션 + Fragment 등장
 
 - **요점**: scene 전환 애니메이션 ≥3종 (fade / slide-up / zoom) + fragment (클릭마다 한 항목씩 등장).
 - **방향성**: 순수 CSS `@keyframes` + `transition` + 약간의 JS (fragment 카운터). 프레임워크 의존 없음.
-- **참조**: spec-1-01 IR 결정 결과 (애니메이션 메타데이터를 IR 어디에 둘지).
-- **연관 모듈**: viewer 의 scene 전환 / fragment 진행 모듈.
+- **참조**: spec-01-01 IR 결정 결과 (애니메이션 메타데이터를 IR 어디에 둘지).
+- **연관 모듈**: `studio/src/` 의 scene 전환 / fragment 진행 모듈.
 
-### spec-1-04 — PDF 출력 (`@media print`)
+### spec-01-05 — PDF 출력 (`@media print`)
 
 - **요점**: 같은 viewer URL 을 브라우저 인쇄 → PDF 로 저장하면 scene 단위로 페이지가 정확히 떨어진다.
 - **방향성**: `@media print` 룰 — `.scene { page-break-after: always; }`, `.animation-only { display: none; }` 등. fragment 의 *최종 상태* 가 PDF 에 보이도록.
-- **참조**: spec-1-03 의 애니메이션 / fragment 정의.
-- **연관 모듈**: 전역 print stylesheet.
+- **참조**: spec-01-04 의 애니메이션 / fragment 정의.
+- **연관 모듈**: `studio/src/` 의 전역 print stylesheet.
 
-### spec-1-05 (선택) — Markdown → Scene 파서
+### spec-01-06 (선택) — Markdown → Scene 파서 고도화
 
-- **요점**: 만약 spec-1-01 에서 IR 을 HTML 단독이 아닌 *Markdown 입력* 으로 결정했을 경우, Markdown → 내부 IR 변환기.
-- **방향성**: 단순 markdown-it 위에 frontmatter / `---` 구분 / fragment 주석 / scene 메타데이터 처리. 결정에 따라 본 spec 자체가 불필요할 수 있음.
-- **참조**: spec-1-01 의 ADR-001.
-- **연관 모듈**: 신규 파서 모듈.
+- **요점**: spec-01-01 의 최소 파서 위에 다중 scene / fragment 메타 / scene 분리 구분자 등을 확장.
+- **방향성**: 기존 `studio/src/ir/parser.ts` 위에 markdown-it 플러그인 / 추가 정규식. 결정에 따라 본 spec 자체가 불필요할 수 있음.
+- **참조**: spec-01-01 의 ADR-001.
+- **연관 모듈**: `studio/src/ir/parser.ts`.
 
-> **참고**: spec-1-05 의 필요 여부는 spec-1-01 의 IR 결정 시점에 결정됨. 결정에 따라 본 phase 의 총 spec 수는 4 또는 5.
+> **참고**: spec-01-06 의 필요 여부는 다른 spec 진행 중 판단. 결정에 따라 본 phase 의 총 spec 수는 5 또는 6.
 
 ## 🧪 통합 테스트 시나리오 (간결)
 
@@ -105,19 +113,19 @@
 - **Given**: scene 1장이 작성된 상태
 - **When**: 브라우저로 viewer URL 을 연다
 - **Then**: scene 콘텐츠가 화면 가득 표시되고, F 키로 풀스크린이 토글된다
-- **연관 SPEC**: spec-1-01, spec-1-02
+- **연관 SPEC**: spec-01-01, spec-01-03
 
 ### 시나리오 2: 다중 scene 네비 + 애니메이션 + fragment
 - **Given**: scene 3장 (각각 fragment 2~3개 + 전환 애니메이션 종류 다름)
 - **When**: → 키를 연속해 눌러 scene 1 → 2 → 3 순으로 진행
 - **Then**: 각 scene 전환 시 애니메이션이 동작하고, fragment 가 한 번 누를 때마다 하나씩 등장하며, scene 3 도달 후 → 키는 멈춘다 (또는 끝 스크린)
-- **연관 SPEC**: spec-1-02, spec-1-03
+- **연관 SPEC**: spec-01-03, spec-01-04
 
 ### 시나리오 3: PDF 출력
 - **Given**: 시나리오 2 의 동일 콘텐츠
 - **When**: 브라우저 인쇄 → "PDF 로 저장"
 - **Then**: scene 3장이 각각 1페이지로 떨어지고, 모든 fragment 의 *최종 상태* 가 PDF 에 포함되며, 애니메이션 잔재 / 잘림이 없다
-- **연관 SPEC**: spec-1-04
+- **연관 SPEC**: spec-01-05
 
 ### 통합 테스트 실행
 
@@ -133,17 +141,19 @@
 - **선행 phase**: 없음 (base layer)
 - **외부 시스템**: 없음 (브라우저 1개로 동작)
 - **연관 ADR** (phase 진행 중 작성):
-  - `docs/decisions/ADR-001-scene-ir.md` (spec-1-01)
-  - `docs/decisions/ADR-002-render-engine.md` (spec-1-01)
+  - `docs/decisions/ADR-001-scene-ir.md` (spec-01-01)
+  - `docs/decisions/ADR-002-render-engine.md` (spec-01-01)
+  - `docs/decisions/ADR-003-repository-structure.md` (spec-01-02)
 
 ## 📝 위험 요소 및 완화
 
 | 위험 | 영향 | 완화책 |
 |---|---|---|
-| Scene IR 결정이 잘못되면 phase-2 이상까지 영향 (Event Log 매칭, 자막 sync 등 모두 IR 에 의존) | 큼 | spec-1-01 에서 ADR-001 작성 + 사용자 명시 동의. spec 분할로 다른 결정 (네비, 애니, PDF) 은 IR 결정 *후* 진행. |
+| Scene IR 결정이 잘못되면 phase-2 이상까지 영향 (Event Log 매칭, 자막 sync 등 모두 IR 에 의존) | 큼 | spec-01-01 에서 ADR-001 작성 + 사용자 명시 동의. spec 분할로 다른 결정 (네비, 애니, PDF) 은 IR 결정 *후* 진행. |
 | 자체 viewer 구현 시 작업량 폭발 (키보드 + 애니 + PDF 등 직접 다 만들면 무거움) | 중 | 첫 일주일 안에 PoC 결과로 판단. 부족하면 Reveal.js 같은 기존 엔진 위로 fallback (= ADR-002 의 두 번째 선택지). |
-| 애니메이션이 PDF 에 잘못 출력되어 시나리오 3 가 깨짐 | 중 | spec-1-03 작성 시점부터 `@media print` 호환을 고려 (fragment 의 최종 상태가 print 시 보이도록 CSS 설계). |
-| 잔재 정리 (queue.md / .gitignore / CLAUDE.md / .claude) 가 spec-1-01 의 본 작업과 섞임 | 작음 | spec-1-01 의 첫 task 로 잔재만 별도 commit (`chore`) 하고, 본 작업은 별 task 로 분리. |
+| 애니메이션이 PDF 에 잘못 출력되어 시나리오 3 가 깨짐 | 중 | spec-01-04 작성 시점부터 `@media print` 호환을 고려 (fragment 의 최종 상태가 print 시 보이도록 CSS 설계). |
+| 잔재 정리 (queue.md / .gitignore / CLAUDE.md / .claude) 가 spec-01-01 의 본 작업과 섞임 | 작음 | spec-01-01 의 첫 task 로 잔재만 별도 commit (`chore`) 하고, 본 작업은 별 task 로 분리. (완료) |
+| 저장소 구조 / 패키지 매니저 / 미래 React 도입 결정 부재 → 매 spec 마다 같은 고민 | 중 | spec-01-02 에서 ADR-003 으로 굳힘 — `studio/` 컨테이너 + pnpm + 미래 자리 명시. (완료) |
 
 ## 🏁 Phase Done 조건
 
