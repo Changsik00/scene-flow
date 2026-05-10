@@ -48,7 +48,7 @@
 <!-- sdd:specs:start -->
 | ID | 슬러그 | 우선순위 | 상태 | 디렉토리 |
 |---|---|:---:|---|---|
-| `spec-01-01` | bootstrap-viewer | P? | Active | `specs/spec-01-01-bootstrap-viewer/` |
+| `spec-01-01` | bootstrap-viewer | P? | Merged | `specs/spec-01-01-bootstrap-viewer/` |
 <!-- sdd:specs:end -->
 
 > 상태 허용값: `Backlog` / `In Progress` / `Merged`
