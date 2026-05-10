@@ -47,4 +47,21 @@ describe('loadAllScenes', () => {
     expect(result.scenes[0].meta.title).toBe('First');
     expect(result.scenes[1].meta.title).toBe('Second');
   });
+
+  it('frontmatter transition 이 있으면 section 에 data-transition 을 주입한다', () => {
+    const modules: Record<string, string> = {
+      './scenes/01-a.md': '---\ntransition: fade\n---\n# A',
+    };
+    const result = loadAllScenes(modules);
+    expect(result.sections[0]).toMatch(/^<section data-transition="fade">/);
+  });
+
+  it('transition 이 없으면 data-transition 속성을 추가하지 않는다', () => {
+    const modules: Record<string, string> = {
+      './scenes/01-a.md': '# A',
+    };
+    const result = loadAllScenes(modules);
+    expect(result.sections[0]).toMatch(/^<section>/);
+    expect(result.sections[0]).not.toContain('data-transition');
+  });
 });
