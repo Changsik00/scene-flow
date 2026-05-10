@@ -1,9 +1,13 @@
 import Reveal from 'reveal.js';
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/dist/theme/black.css';
-import { parseScene } from './ir/parser';
+import { loadAllScenes } from './scenes/loader';
 
-const SCENE_URL = '/scenes/hello.md';
+const sceneModules = import.meta.glob('./scenes/*.md', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
 
 async function bootstrap(): Promise<void> {
   const slidesEl = document.getElementById('slides');
@@ -11,23 +15,22 @@ async function bootstrap(): Promise<void> {
     throw new Error('#slides 컨테이너를 찾지 못했습니다.');
   }
 
-  const md = await fetch(SCENE_URL).then((res) => {
-    if (!res.ok) {
-      throw new Error(`scene 로드 실패: ${SCENE_URL} (${res.status})`);
-    }
-    return res.text();
-  });
-
-  const ir = parseScene(md);
-  if (ir.meta.title) {
-    document.title = ir.meta.title;
+  const { sections, scenes } = loadAllScenes(sceneModules);
+  if (sections.length === 0) {
+    throw new Error('scene 파일을 찾지 못했습니다 (studio/src/scenes/*.md).');
   }
-  slidesEl.innerHTML = ir.sections.join('\n');
+
+  const firstTitle = scenes[0]?.meta.title;
+  if (firstTitle) {
+    document.title = firstTitle;
+  }
+  slidesEl.innerHTML = sections.join('\n');
 
   const deck = new Reveal({
     hash: true,
     controls: true,
     progress: true,
+    loop: false,
   });
   await deck.initialize();
 }
