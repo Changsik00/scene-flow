@@ -80,9 +80,28 @@ scene-flow 의 차별점은 **layered overlay 모델 + Scene Event Log** — 발
 
 ## 현재 상태
 
-- `phase-01` (Scene Engine) **설계 단계**.
+- `phase-01` (Scene Engine) **진행 중** — `spec-01-01` (IR + 렌더 결정 + 최소 viewer) Merged, `spec-01-02` (저장소 구조 정리) 진행.
 - 본 저장소는 [harness-kit](https://github.com/) 거버넌스를 따른다 — `/hk-align` 으로 SDD 세션 시작.
+
+## 프로젝트 구조
+
+```
+scene-flow/
+├── README.md / CLAUDE.md            ← 진입점
+├── studio/                          ← 코드 (Vite + TypeScript + Reveal.js, pnpm)
+│   ├── package.json / pnpm-lock.yaml
+│   ├── src/  public/  test/
+│   └── tsconfig.json / vite.config.ts
+├── specs/                           ← SDD 작업 로그
+├── backlog/                         ← phase / queue
+└── docs/                            ← ADR, planning
+    └── decisions/                   ← ADR-001 ~ 003
+```
+
+> 코드 작업은 `cd studio && pnpm run dev` (또는 `build` / `test`).
+> 저장소 구조 결정 → [`docs/decisions/ADR-003-repository-structure.md`](docs/decisions/ADR-003-repository-structure.md)
 
 ## 문서
 
 - [기획 / Phase 정의 / 결정되지 않은 사항](docs/planning.md)
+- [ADR 모음](docs/decisions/) — Scene IR (001), Render Engine (002), Repository Structure (003)
