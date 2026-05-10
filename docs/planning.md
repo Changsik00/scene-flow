@@ -40,7 +40,8 @@ Phase 1 (base)   Scene Engine          HTML scene + viewer + PDF
 - **산출물** (모두 `studio/` 안 — ADR-003):
   - `studio/src/ir/` — Markdown + inline HTML 파서 (ADR-001)
   - `studio/src/viewer.ts` — Reveal.js 위 viewer (ADR-002, 점진 이주 정책)
-  - `studio/public/scenes/*.md` — scene 파일들
+  - `studio/src/scenes/` — scene 파일들 (`NN-{slug}.md` 컨벤션, `import.meta.glob` 자동 발견)
+  - `studio/src/scenes/loader.ts` — 정렬 + 평탄화 (Reveal 비종속, 단위 테스트)
   - 브라우저에서 키보드 / 풀스크린 발표
   - CSS 애니메이션 / fragment 등장
   - PDF 출력 (`@media print` 활용)
