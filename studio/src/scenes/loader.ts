@@ -14,6 +14,6 @@ function withTransition(section: string, transition: Transition | undefined): st
 export function loadAllScenes(modules: Record<string, string>): LoadedScenes {
   const keys = Object.keys(modules).sort();
   const scenes = keys.map((k) => parseScene(modules[k]));
-  const sections = scenes.map((s, i) => withTransition(s.sections[0], s.meta.transition));
+  const sections = scenes.map((s) => withTransition(s.sections[0], s.meta.transition));
   return { sections, scenes, keys };
 }
