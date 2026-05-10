@@ -1,7 +1,7 @@
 import Reveal from 'reveal.js';
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/dist/theme/black.css';
-import { parseScene } from './ir/parser.ts';
+import { parseScene } from './ir/parser';
 
 const SCENE_URL = '/scenes/hello.md';
 

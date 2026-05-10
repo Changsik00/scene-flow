@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { parseScene } from '../src/ir/parser.ts';
+import { parseScene } from '../src/ir/parser';
 
 describe('parseScene', () => {
   it('단순 헤더 + 본문을 section markup 으로 변환한다', () => {
