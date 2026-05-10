@@ -90,7 +90,13 @@ scene-flow/
 ├── README.md / CLAUDE.md            ← 진입점
 ├── studio/                          ← 코드 (Vite + TypeScript + Reveal.js, pnpm)
 │   ├── package.json / pnpm-lock.yaml
-│   ├── src/  public/  test/
+│   ├── src/
+│   │   ├── viewer.ts                ← Reveal init + scene 주입
+│   │   ├── ir/parser.ts             ← MD + inline HTML 파서
+│   │   └── scenes/
+│   │       ├── loader.ts            ← 정렬 + 평탄화
+│   │       └── NN-*.md              ← scene 파일 (자동 발견)
+│   ├── test/                        ← Vitest
 │   └── tsconfig.json / vite.config.ts
 ├── specs/                           ← SDD 작업 로그
 ├── backlog/                         ← phase / queue
