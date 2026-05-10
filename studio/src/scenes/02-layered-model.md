@@ -1,5 +1,6 @@
 ---
 title: layered overlay 모델
+transition: slide
 ---
 
 # Layered Overlay

@@ -1,7 +1,18 @@
 import MarkdownIt from 'markdown-it';
 
+export type Transition = 'none' | 'fade' | 'slide' | 'convex' | 'concave' | 'zoom';
+const TRANSITIONS: readonly Transition[] = [
+  'none',
+  'fade',
+  'slide',
+  'convex',
+  'concave',
+  'zoom',
+];
+
 export interface SceneMeta {
   title?: string;
+  transition?: Transition;
 }
 
 export interface SceneIR {
@@ -34,6 +45,10 @@ function parseFrontmatter(input: string): { meta: SceneMeta; body: string } {
     const value = kv[2].trim().replace(/^['"](.*)['"]$/, '$1');
     if (key === 'title') {
       meta.title = value;
+    } else if (key === 'transition') {
+      if ((TRANSITIONS as readonly string[]).includes(value)) {
+        meta.transition = value as Transition;
+      }
     }
   }
 

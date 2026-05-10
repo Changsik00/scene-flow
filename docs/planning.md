@@ -38,10 +38,11 @@ Phase 1 (base)   Scene Engine          HTML scene + viewer + PDF
 - **목적**: scene 의 IR (intermediate representation) 을 HTML 로 굳히고, 발표 / 출력 / 후속 phase 가 모두 이걸 공유하게 한다.
 - **진입 조건**: 비전 문서 굳음 (= 본 SPEC 통과 후).
 - **산출물** (모두 `studio/` 안 — ADR-003):
-  - `studio/src/ir/` — Markdown + inline HTML 파서 (ADR-001)
+  - `studio/src/ir/` — Markdown + inline HTML 파서 (ADR-001) + frontmatter `transition` 추출
   - `studio/src/viewer.ts` — Reveal.js 위 viewer (ADR-002, 점진 이주 정책)
   - `studio/src/scenes/` — scene 파일들 (`NN-{slug}.md` 컨벤션, `import.meta.glob` 자동 발견)
-  - `studio/src/scenes/loader.ts` — 정렬 + 평탄화 (Reveal 비종속, 단위 테스트)
+  - `studio/src/scenes/loader.ts` — 정렬 + 평탄화 + `data-transition` 주입 (Reveal 비종속*)
+  - **컨벤션**: scene 전환 = frontmatter `transition: fade|slide|zoom|...` (Reveal 표준), fragment 등장 = `<li class="fragment">` 인라인 HTML
   - 브라우저에서 키보드 / 풀스크린 발표
   - CSS 애니메이션 / fragment 등장
   - PDF 출력 (`@media print` 활용)
