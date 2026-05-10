@@ -1,0 +1,11 @@
+# harness-kit
+.harness-kit/
+.harness-backup-*/
+.claude/state/
+
+# node / build
+node_modules/
+dist/
+
+# os
+.DS_Store
