@@ -37,8 +37,10 @@ Phase 1 (base)   Scene Engine          HTML scene + viewer + PDF
 
 - **목적**: scene 의 IR (intermediate representation) 을 HTML 로 굳히고, 발표 / 출력 / 후속 phase 가 모두 이걸 공유하게 한다.
 - **진입 조건**: 비전 문서 굳음 (= 본 SPEC 통과 후).
-- **산출물**:
-  - Markdown / HTML 로 scene 작성 (소스 형식은 phase-01 첫 spec 에서 결정 — Open Questions §5.2)
+- **산출물** (모두 `studio/` 안 — ADR-003):
+  - `studio/src/ir/` — Markdown + inline HTML 파서 (ADR-001)
+  - `studio/src/viewer.ts` — Reveal.js 위 viewer (ADR-002, 점진 이주 정책)
+  - `studio/public/scenes/*.md` — scene 파일들
   - 브라우저에서 키보드 / 풀스크린 발표
   - CSS 애니메이션 / fragment 등장
   - PDF 출력 (`@media print` 활용)
@@ -144,21 +146,13 @@ Phase 2 의 녹화 모델:
 **현재 정책**: **A 부터 시작 + Scene Event Log 항상 기록 → 부족하면 C 로 확장**.
 이유: 한 번에 녹화하는 능력이 가능한지 사용해보면서 결정. Event Log 가 있으면 어느 쪽이든 호환된다 (라이브 음성 유지하면서 scene 부분만 재렌더링 등). 코드 버릴 일 없음.
 
-### 5.2 Scene 소스 형식
+### 5.2 Scene 소스 형식  ✅ 결정됨 (ADR-001)
 
-- (a) Markdown 우선 (간단, 작성 빠름)
-- (b) HTML / MDX 우선 (자유도 최대, React 활용 가능)
-- (c) DSL (YAML/JSON) → HTML 컴파일 (AI 친화)
+- **(b) Markdown + inline HTML** — 작성성 + 자유도 균형. AI 친화. spec-01-01 에서 결정 → `docs/decisions/ADR-001-scene-ir.md`.
 
-→ phase-01 의 첫 spec 에서 결정.
+### 5.3 렌더 / viewer 엔진  ✅ 결정됨 (ADR-002)
 
-### 5.3 렌더 / viewer 엔진
-
-- (a) Reveal.js 위에 얹기 (생태계 활용, 무거움)
-- (b) Remotion (timeline 강력, React 강제, 발표 모드 약함)
-- (c) 자체 viewer (가벼움, 자유, 직접 만들어야 함)
-
-→ phase-01 의 첫 spec 에서 결정.
+- **(a) Reveal.js 위에 얹기** — 점진 이주 정책 (필요 시 (d) 플러그인 → (c) 자체) 명시. spec-01-01 에서 결정 → `docs/decisions/ADR-002-render-engine.md`.
 
 ### 5.4 캡처 메커니즘 (Phase 2)
 
@@ -168,7 +162,14 @@ Phase 2 의 녹화 모델:
 
 → phase-02 의 첫 spec 에서 결정.
 
-### 5.5 PPT (`.pptx`) export 의 위치
+### 5.5 저장소 구조 / 패키지 매니저  ✅ 결정됨 (ADR-003)
+
+- **저장소 구조**: 거버넌스 (specs/ backlog/ docs/) + 진입점 (README, CLAUDE, .gitignore) + **`studio/`** 컨테이너 (코드 전체).
+- **패키지 매니저**: pnpm (corepack 활성).
+- **미래 React/Tailwind/shadcn/FSD/front.md**: ADR-003 에 *자리만 명시* — 실제 도입은 phase-3/4 즈음 (오버엔지니어링 회피).
+- spec-01-02 에서 결정 → `docs/decisions/ADR-003-repository-structure.md`.
+
+### 5.6 PPT (`.pptx`) export 의 위치
 
 - 비전상 "export target 중 하나" 로 강등됨.
 - 실제로 만들 가치가 있는가는 사용자 수요를 보고 결정 — 당장은 우선순위 낮음.
