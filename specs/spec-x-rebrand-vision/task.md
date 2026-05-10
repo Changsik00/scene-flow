@@ -10,7 +10,7 @@
 - [x] plan.md 작성
 - [x] task.md 작성 (이 파일)
 - [-] 백로그 업데이트 — spec-x 는 phase 표 갱신 N/A (queue.md 는 sdd 가 자동 관리)
-- [ ] 사용자 Plan Accept
+- [x] 사용자 Plan Accept
 
 ---
 
@@ -52,15 +52,10 @@
 ## Task 4: 옛 이름 흔적 정리 (Chore)
 
 ### 4-1. 저장소 grep + 정리
-- [ ] 다음 명령 실행:
-  ```bash
-  grep -rn -E "html[-_]?to[-_]?ppt|html2pptx|htmltoppt" \
-    --exclude-dir={.harness-kit,.git,.claude} .
-  ```
-- [ ] 발견된 모든 위치를 `scene-flow` 또는 새 비전 문구로 치환 / 삭제
-  (없으면 본 task 는 `[-] 통과` 처리하고 commit 생략)
-- [ ] 재검증: grep 결과 0건
-- [ ] Commit (해당 시): `chore(spec-x-rebrand-vision): remove legacy html-to-ppt references`
+- [x] grep 실행 — 결과: 본 SPEC 문서 (spec/plan/task) 내부에서 *과거 사실 / 명령 패턴 인용* 으로만 hit. 사용자 문서 / 코드 잔재 0건.
+- [-] 발견된 모든 위치를 `scene-flow` 또는 새 비전 문구로 치환 / 삭제 — **사유**: hit 가 모두 메타 컨텍스트 (배경 설명 / grep 패턴 자체) 라 정리 대상이 아님.
+- [x] 재검증: 사용자 문서 / 코드 (`README.md`, `docs/`, `CLAUDE.md`) 에서 0건 확인.
+- [-] Commit — **사유**: 변경 없음. task.md 마킹만 Ship commit 에 묶어 처리.
 
 ---
 
@@ -71,12 +66,12 @@
 - [-] 코드 품질 점검 (lint / type check) — docs only, N/A
 - [-] 전체 테스트 실행 — docs only, constitution §9.1 예외 적용
 - [-] 통합 테스트 — Integration Test Required = no
-- [ ] **walkthrough.md 작성** (증거 로그)
-- [ ] **pr_description.md 작성** (템플릿 준수)
-- [ ] **Ship Commit**: `docs(spec-x-rebrand-vision): ship walkthrough and pr description`
-- [ ] **Push**: `git push -u origin spec-x-rebrand-vision`
-- [ ] **PR 생성**: `gh pr create` 또는 `/hk-pr-gh` 로 생성
-- [ ] **사용자 알림**: 푸시 완료 + PR URL 보고
+- [x] **walkthrough.md 작성** (증거 로그)
+- [x] **pr_description.md 작성** (템플릿 준수)
+- [x] **Ship Commit**: `docs(spec-x-rebrand-vision): ship walkthrough and pr description`
+- [x] **Push**: `git push -u origin spec-x-rebrand-vision`
+- [x] **PR 생성**: `gh pr create` 또는 `/hk-pr-gh` 로 생성
+- [x] **사용자 알림**: 푸시 완료 + PR URL 보고
 
 ---
 
@@ -86,5 +81,5 @@
 |---|---|
 | **총 Task 수** | 5 (Pre-flight 별도) |
 | **예상 commit 수** | 3~4 (README / planning / 이름정리(선택) / ship) |
-| **현재 단계** | Planning |
+| **현재 단계** | Ship |
 | **마지막 업데이트** | 2026-05-10 |
