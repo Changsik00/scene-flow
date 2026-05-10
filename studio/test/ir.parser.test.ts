@@ -46,4 +46,16 @@ describe('parseScene', () => {
     expect(ir.sections[0]).not.toContain('---');
     expect(ir.sections[0]).not.toContain('title: Hello');
   });
+
+  it('frontmatter 의 transition 키를 추출한다 (Reveal 표준 값만)', () => {
+    const md = ['---', 'title: A', 'transition: zoom', '---', '# Body'].join('\n');
+    const ir = parseScene(md);
+    expect(ir.meta.transition).toBe('zoom');
+  });
+
+  it('transition 의 잘못된 값은 무시한다 (undefined 유지)', () => {
+    const md = ['---', 'transition: invalid-value', '---', '# Body'].join('\n');
+    const ir = parseScene(md);
+    expect(ir.meta.transition).toBeUndefined();
+  });
 });
