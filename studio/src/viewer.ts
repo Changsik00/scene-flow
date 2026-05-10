@@ -1,6 +1,10 @@
 import Reveal from 'reveal.js';
 import 'reveal.js/dist/reveal.css';
 import 'reveal.js/dist/theme/black.css';
+// Reveal v5 의 print-pdf 모드용 CSS — html.reveal-print 셀렉터 안에 격리되어 있어
+// 항상 import 해도 default 모드 동작에 영향 없음. ?print-pdf URL 진입 시 Reveal 가
+// html 에 reveal-print 클래스를 추가하면 그제서야 활성화됨.
+import 'reveal.js/css/print/pdf.scss';
 import { loadAllScenes } from './scenes/loader';
 
 const sceneModules = import.meta.glob('./scenes/*.md', {

@@ -107,6 +107,17 @@ scene-flow/
 > 코드 작업은 `cd studio && pnpm run dev` (또는 `build` / `test`).
 > 저장소 구조 결정 → [`docs/decisions/ADR-003-repository-structure.md`](docs/decisions/ADR-003-repository-structure.md)
 
+## PDF 출력
+
+scene 들을 한 PDF 로 뽑으려면:
+
+1. `cd studio && pnpm run dev`
+2. 브라우저에서 `http://localhost:5173/?print-pdf` (포트가 점유되어 있으면 dev 서버가 출력하는 fallback URL 사용)
+3. `Cmd+P` (macOS) 또는 `Ctrl+P` (Windows / Linux) → **"PDF 로 저장"**
+
+> Reveal.js 의 `?print-pdf` 모드가 자동으로 각 scene 을 1 페이지로 펼치고, fragment 의 *최종 상태* 를 모든 페이지에 보이게 한다.
+> 자동 검증 (Playwright headless) 은 별도 스크립트로 가능 — `specs/spec-01-05-pdf-print-output/` 의 검증 패턴 참고.
+
 ## 문서
 
 - [기획 / Phase 정의 / 결정되지 않은 사항](docs/planning.md)

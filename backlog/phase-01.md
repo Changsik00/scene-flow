@@ -52,6 +52,7 @@
 | `spec-01-02` | restructure-after-bootstrap | P? | Merged | `specs/spec-01-02-restructure-after-bootstrap/` |
 | `spec-01-03` | multi-scene-navigation | P? | Merged | `specs/spec-01-03-multi-scene-navigation/` |
 | `spec-01-04` | animations-and-fragments | P? | Merged | `specs/spec-01-04-animations-and-fragments/` |
+| `spec-01-05` | pdf-print-output | P? | Merged | `specs/spec-01-05-pdf-print-output/` |
 <!-- sdd:specs:end -->
 
 > 상태 허용값: `Backlog` / `In Progress` / `Merged`
