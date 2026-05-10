@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>scene-flow</title>
     <style>
+      /* fragment 의 최종 상태를 PDF 에 보이게 — 두 모드 모두 커버 */
       @media print {
         .fragment { opacity: 1 !important; visibility: visible !important; }
+      }
+      html.reveal-print .fragment {
+        opacity: 1 !important;
+        visibility: visible !important;
       }
     </style>
   </head>
