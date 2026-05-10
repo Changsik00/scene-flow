@@ -50,6 +50,7 @@
 |---|---|:---:|---|---|
 | `spec-01-01` | bootstrap-viewer | P? | Merged | `specs/spec-01-01-bootstrap-viewer/` |
 | `spec-01-02` | restructure-after-bootstrap | P? | Merged | `specs/spec-01-02-restructure-after-bootstrap/` |
+| `spec-01-03` | multi-scene-navigation | P? | Merged | `specs/spec-01-03-multi-scene-navigation/` |
 <!-- sdd:specs:end -->
 
 > 상태 허용값: `Backlog` / `In Progress` / `Merged`
