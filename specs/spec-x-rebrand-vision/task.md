@@ -25,27 +25,27 @@
 ## Task 2: README.md 전면 재작성
 
 ### 2-1. 새 비전 / Phase 분할 / 비교표 반영
-- [ ] `README.md` 전체 교체 — 제목 / 한 줄 비전 / 핵심 멘탈 모델 / Phase 1~4 표 / 비교표 / 현재 상태
-- [ ] 옛 이름 (`html-to-ppt`) 흔적 제거
-- [ ] 수동 검증: 30초 진입 테스트 통과 — 처음 보는 사람이 비전과 단계를 이해할 수 있는가
-- [ ] Commit: `docs(spec-x-rebrand-vision): rewrite README with scene-flow vision`
+- [x] `README.md` 전체 교체 — 제목 / 한 줄 비전 / 핵심 멘탈 모델 / Phase 1~4 표 / 비교표 / 현재 상태
+- [x] 옛 이름 (`html-to-ppt`) 흔적 제거
+- [x] 수동 검증: 30초 진입 테스트 통과 — 처음 보는 사람이 비전과 단계를 이해할 수 있는가
+- [x] Commit: `docs(spec-x-rebrand-vision): rewrite README with scene-flow vision`
 
 ---
 
 ## Task 3: docs/planning.md 전면 재작성
 
 ### 3-1. 옛 Phase 1~4 / 디렉토리 구조 / 확장 아이디어 제거
-- [ ] 옛 내용 일괄 삭제
+- [x] 옛 내용 일괄 삭제
 
 ### 3-2. 새 Phase 1~4 정의 + Scene Event Log + A/C 보류 정책
-- [ ] 비전 섹션 (HTML scene base + overlay)
-- [ ] Phase 1 (Scene Engine) — 정의 / 진입 조건 / 산출물 / 독립 가치
-- [ ] Phase 2 (Recording) — 정의 + Scene Event Log JSONL 예시 + A/C 보류 정책
-- [ ] Phase 3 (Composition) — ffmpeg pipeline + 자막 sync 전략
-- [ ] Phase 4 (AI Automation) — script→scene / TTS / 자동 자막
-- [ ] Open Questions — A/C 최종 결정, Scene IR 형태, 렌더 엔진 선택
-- [ ] 수동 검증: README Phase 표와 1:1 매칭, Scene Event Log 명문화 확인
-- [ ] Commit: `docs(spec-x-rebrand-vision): redefine phases and introduce scene event log`
+- [x] 비전 섹션 (HTML scene base + overlay)
+- [x] Phase 1 (Scene Engine) — 정의 / 진입 조건 / 산출물 / 독립 가치
+- [x] Phase 2 (Recording) — 정의 + Scene Event Log JSONL 예시 + A/C 보류 정책
+- [x] Phase 3 (Composition) — ffmpeg pipeline + 자막 sync 전략
+- [x] Phase 4 (AI Automation) — script→scene / TTS / 자동 자막
+- [x] Open Questions — A/C 최종 결정, Scene IR 형태, 렌더 엔진 선택
+- [x] 수동 검증: README Phase 표와 1:1 매칭, Scene Event Log 명문화 확인
+- [x] Commit: `docs(spec-x-rebrand-vision): redefine phases and introduce scene event log`
 
 ---
 
