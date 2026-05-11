@@ -71,13 +71,13 @@
 ## Task 6: 회귀 보호 + Ship
 
 ### 6-1. 회귀 테스트
-- [ ] `cd studio && pnpm run test` → 11/11 PASS
-- [ ] `./.harness-kit/bin/sdd test passed`
+- [x] `cd studio && pnpm run test` → 11/11 PASS
+- [x] `./.harness-kit/bin/sdd test passed`
 
 ### 6-2. walkthrough + pr_description + ship
-- [ ] walkthrough.md 작성 (짧게)
-- [ ] pr_description.md 작성
-- [ ] `sdd ship` → ship commit 생성
+- [x] walkthrough.md 작성 (짧게)
+- [x] pr_description.md 작성
+- [x] `sdd ship` → ship commit 생성
 - [ ] task.md finalize commit (필요 시)
 
 ### 6-3. Push + PR
