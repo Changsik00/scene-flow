@@ -8,13 +8,14 @@
 ## 📦 진행 중 Phase
 
 <!-- sdd:active:start -->
-- **phase-01** — scene-engine — 5 spec — 다음: (spec 없음)
+(active phase 없음. `bin/sdd phase new <slug>` 로 시작)
 <!-- sdd:active:end -->
 
 ## 📥 spec-x 대기
 
 <!-- sdd:specx:start -->
 없음
+- [ ] spec-x-hold-for-replanning — hold-for-replanning
 <!-- sdd:specx:end -->
 
 ## 🧊 Icebox
@@ -42,6 +43,7 @@
 <!-- sdd:done:start -->
 없음
 - [x] spec-x-rebrand-vision (완료)
+- **1** — ? — completed 2026-05-11
 <!-- sdd:done:end -->
 
 ---
