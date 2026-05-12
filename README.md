@@ -1,5 +1,10 @@
 # scene-flow
 
+> 🚧 **현재 HOLD** (2026-05-10) — phase-01 완료 후 *기획 보강 단계*. 사용자 시나리오 / 편집 UX / AI agent 위치 등 핵심 빈 공간 발견. 추가 phase 진행 *중지*.
+> 사유 / 다음 작업 / 재개 조건: [`backlog/queue.md`](backlog/queue.md) 상단 + [`docs/planning.md`](docs/planning.md) §7 재검토.
+
+---
+
 > HTML 을 base layer 로 한 **layered presentation & video pipeline**.
 > scene 을 만들고, 발표하면서 녹화하고, 그 위에 음성·자막을 덮어 최종 콘텐츠를 뽑는다.
 

@@ -160,12 +160,55 @@
 
 ## 🏁 Phase Done 조건
 
-- [ ] 모든 SPEC 이 main 으로 merge (base branch 모드 OFF)
-- [ ] 위 통합 테스트 시나리오 1~3 모두 PASS
-- [ ] 성공 기준 §1~5 정량 측정 결과를 본 문서 "검증 결과" 섹션에 기록
-- [ ] ADR-001 (Scene IR) / ADR-002 (Render Engine) 가 `docs/decisions/` 에 작성되어 있고 phase 의 결정과 일치
-- [ ] 사용자 최종 승인 (`/hk-phase-ship` 절차)
+- [x] 모든 SPEC 이 main 으로 merge (PR #2 / #3 / #4 / #5 / #6)
+- [x] 위 통합 테스트 시나리오 1~3 모두 PASS (아래 "검증 결과" 참조)
+- [x] 성공 기준 §1~5 정량 측정 결과를 본 문서 "검증 결과" 섹션에 기록
+- [x] ADR-001 (Scene IR) / ADR-002 (Render Engine) / ADR-003 (Repository Structure) 작성 완료
+- [x] 사용자 최종 승인 (`/hk-phase-ship` 절차, 2026-05-10)
 
-## 📊 검증 결과 (phase 완료 시 작성)
+## 📊 검증 결과 (phase-ship 시점, 2026-05-10)
 
-<!-- 통합 테스트 로그, 성공 기준 측정값, 회귀 점검 결과 등을 여기 첨부 -->
+### 통합 시나리오 1+2+3 한 흐름 (Playwright 헤드리스)
+
+| # | 체크 | 결과 |
+|:-:|---|:-:|
+| 1 | document title = `Hello scene-flow` | ✓ |
+| 2 | scene 1 h1 = `Hello, scene-flow` | ✓ |
+| 3 | default 모드 scene 수 = 3 | ✓ |
+| 4 | scene 1 `data-transition = zoom` | ✓ |
+| 5 | → 후 scene 2 `data-transition = slide` | ✓ |
+| 6 | → 후 scene 3 `data-transition = fade` | ✓ |
+| 7 | scene 3 fragment 총 3개 | ✓ |
+| 8 | 초기 `.fragment.visible = 0` | ✓ |
+| 9 | → 3회 후 `.fragment.visible = 3` | ✓ |
+| 10 | default 모드 console 에러 = 0 | ✓ |
+| 11 | print-pdf 모드 활성 (`html.reveal-print`) | ✓ |
+| 12 | PDF 페이지 수 ≥ 3 (실제 6) | ✓ |
+| 13 | `.pdf-page` wrapper ≥ 3 (실제 6) | ✓ |
+| 14 | scene 3 첫 pdf-page 에 fragment 모두 보임 (3/3) | ✓ |
+| 15 | print-pdf 모드 console 에러 = 0 | ✓ |
+
+**🎉 phase-01 통합 시나리오 1+2+3 PASS (15/15)**
+
+### 성공 기준 정량 측정
+
+| # | 기준 | 결과 |
+|:-:|---|:-:|
+| 1 | 단일 scene 표시 (브라우저 / 키보드 / 풀스크린) | ✓ (spec-01-01, spec-01-03) |
+| 2 | 다중 scene 네비 (←/→/PgUp/PgDn/Space) | ✓ (spec-01-03 — Reveal 내장 + URL hash 동기화) |
+| 3 | CSS 애니메이션 ≥ 3종 (`zoom / slide / fade`) + fragment 1종 | ✓ (spec-01-04) |
+| 4 | PDF 출력 (`@media print` + Reveal `?print-pdf` 모드) | ✓ (spec-01-05) |
+| 5 | 통합 시나리오 1+2+3 한 흐름 PASS | ✓ (본 phase-ship 검증) |
+
+### Spec 별 PR / 검증 누적
+
+| Spec | PR | 단위 | Playwright |
+|---|:-:|:-:|:-:|
+| spec-01-01 bootstrap-viewer | #2 | 3/3 | 7/7 |
+| spec-01-02 restructure-after-bootstrap | #3 | 3/3 회귀 | 7/7 |
+| spec-01-03 multi-scene-navigation | #4 | 7/7 | 9/9 |
+| spec-01-04 animations-and-fragments | #5 | 11/11 | 10/10 |
+| spec-01-05 pdf-print-output | #6 | 11/11 회귀 | 8/8 |
+| **Phase-ship 통합** | (본 done) | 11/11 | **15/15** |
+
+→ **Phase-01 (Scene Engine) DONE**.
