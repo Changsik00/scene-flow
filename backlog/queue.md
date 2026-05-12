@@ -31,7 +31,6 @@
 
 <!-- sdd:specx:start -->
 없음
-- [ ] spec-x-hold-for-replanning — hold-for-replanning
 <!-- sdd:specx:end -->
 
 ## 🧊 Icebox
@@ -67,6 +66,7 @@
 없음
 - [x] spec-x-rebrand-vision (완료)
 - **1** — ? — completed 2026-05-11
+- [x] spec-x-hold-for-replanning (완료)
 <!-- sdd:done:end -->
 
 ---
